@@ -17,13 +17,12 @@ def get_personal_data():
     # ---------------------------------------------------------
     bio_text = f"""
                 <p>
-                    I am a graduate student at the <a href="https://www.ece.nycu.edu.tw/" target="_blank">Institute of Electrical and Control Engineering</a>, National Yang Ming Chiao Tung University (NYCU), Taiwan. 
-                    My research interests focus on <strong>Remote Vital Sign Sensing</strong> and <strong>Signal and Image Processing</strong>.
+                    I am a master degree student at the <a href="https://cssp.lab.nycu.edu.tw/" target="_blank">Chaotic Systems and Signal Processing Laboratory (CSSP Lab.)</a> at National Yang Ming Chiao Tung University (NYCU), Taiwan. My research interests focus on <strong>Remote Vital Sign Sensing</strong> and <strong>Signal and Image Processing</strong>.
                 </p>
                 <p>
                     <span style="font-weight: bold;">Bio:</span>
-                    {first_name} {last_name} received the B.S. degree in Electrical Engineering from <a href="https://www1.cycu.edu.tw/" target="_blank">Chung Yuan Christian University (CYCU)</a>, Taiwan. 
-                    She is currently pursuing her master degree at National Yang Ming Chiao Tung University (NYCU).
+                    {first_name} {last_name} received the B.S. degree in Electrical Engineering from <a href="https://eeweb.cycu.edu.tw/" target="_blank">Chung Yuan Christian University (CYCU)</a>, Taiwan. 
+                    She is currently pursuing her master degree at the <a href="https://cn.nycu.edu.tw/index.php" target="_blank">Institute of Electrical and Control Engineering</a>, National Yang Ming Chiao Tung University (NYCU), where she is advised by <a href="https://cn.nycu.edu.tw/teachers.php?pa=getItem&teacher_id=286&locale=tw" target="_blank">Prof. Wu</a>. Her current research interests include remote photoplethysmography (rPPG), signal processing, image processing, and control systems.
                 </p>
                 <p>
                     <a href="assets/pdf/cv.pdf" target="_blank" style="margin-right: 15px"><i class="fa fa-address-card fa-lg"></i> CV</a>
