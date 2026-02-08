@@ -1,49 +1,67 @@
 from pybtex.database.input import bibtex
 
 def get_personal_data():
-    name = ["Chien-Wen", "Sun (Web Building)"]
-    email = "sshouhua@gmail.com"
-    github = "sshouhua"
-    scholar = "pp0bGY4AAAAJ"
-
+    # ---------------------------------------------------------
+    # 1. 個人基本資料
+    # ---------------------------------------------------------
+    first_name = "Jhih-Sian"
+    last_name = "Lin"
+    full_name_bold = f"{first_name} {last_name}"
+    
+    name = [first_name, last_name] 
+    email = "jslin.ee13@nycu.edu.tw"
+    github = "JSLin02"
+    
+    # ---------------------------------------------------------
+    # 2. 自我介紹 (Bio) - 已修改為女性代名詞 (She/Her)
+    # ---------------------------------------------------------
     bio_text = f"""
                 <p>
-                    I am a Ph.D. student at the <a href="http://140.113.150.201/" target="_blank">Chaotic Systems and Signal Processing Laboratory (CSSP Lab.)</a> at National Yang Ming Chiao Tung University (NYCU), Taiwan. My research focuses on fuzzy systems, autonomous driving, and generative AI. Representative papers are <span style="background-color:#ffffd0">highlighted</span> below.
+                    I am a graduate student at the <a href="https://www.ece.nycu.edu.tw/" target="_blank">Institute of Electrical and Control Engineering</a>, National Yang Ming Chiao Tung University (NYCU), Taiwan. 
+                    My research interests focus on <strong>Remote Vital Sign Sensing</strong> and <strong>Signal and Image Processing</strong>.
                 </p>
                 <p>
                     <span style="font-weight: bold;">Bio:</span>
-                    Chien-Wen received the M.S. degree in Electronic Engineering from <a href="https://fcuece.fcu.edu.tw/" target="_blank">Feng Chia University (FCU)</a>, Taichung, Taiwan, in 2023. He is currently a Ph.D. student at the Institute of Electrical and Control Engineering, <a href="https://cn.nycu.edu.tw/index.php?locale=en" target="_blank">National Yang Ming Chiao Tung University (NYCU)</a>, where he is advised by <a href="https://cn.nycu.edu.tw/teachers.php?pa=getItem&teacher_id=286&locale=tw" target="_blank">Prof. Wu</a>. He is co-advised by <a href="https://auto.fcu.edu.tw/en/teachers-detail/?id=T02182&unit_id=CE12" target="_blank">Prof. Lin</a> of the Department of Automatic Control Engineering, FCU. His current research interests include fuzzy systems, adaptive and robust control, cognitive architectures, autonomous driving, trajectory planning, and generative AI.
+                    {first_name} received the B.S. degree in Electrical Engineering from <a href="https://www1.cycu.edu.tw/" target="_blank">Chung Yuan Christian University (CYCU)</a>, Taiwan. 
+                    She is currently pursuing her graduate degree at National Yang Ming Chiao Tung University (NYCU).
                 </p>
                 <p>
-                    <a href="https://sshouhua.github.io/assets/pdf/cwsun_cv.pdf" target="_blank" style="margin-right: 15px"><i class="fa fa-address-card fa-lg"></i> CV</a>
+                    <a href="assets/pdf/cv.pdf" target="_blank" style="margin-right: 15px"><i class="fa fa-address-card fa-lg"></i> CV</a>
+                    
                     <a href="mailto:{email}" style="margin-right: 15px"><i class="far fa-envelope-open fa-lg"></i> Mail</a>
+                    
                     <a href="https://github.com/{github}" target="_blank" style="margin-right: 15px"><i class="fab fa-github fa-lg"></i> GitHub</a>
-                    <a href="https://scholar.google.com/citations?user={scholar}&hl=en" target="_blank" style="margin-right: 15px"><i class="fa-solid fa-graduation-cap"></i> Scholar</a>
-
                 </p>
     """
-    footer = """
+    
+    # ---------------------------------------------------------
+    # 3. 頁尾
+    # ---------------------------------------------------------
+    footer = f"""
             <div class="col-sm-12" style="">
                 <p>
-                    &copy; Copyright 2025 Chien-Wen Sun. 
+                    &copy; Copyright 2025 {first_name} {last_name}. 
                     Powered by <a href="https://github.com/m-niemeyer/m-niemeyer.github.io" target="_blank">m-niemeyer</a>. 
-                    Design inspired by <a href="https://kashyap7x.github.io/" target="_blank">Kashyap Chitta</a>.                </p>
+                </p>
             </div>
     """
-    return name, bio_text, footer
+    return name, bio_text, footer, full_name_bold
 
 def get_author_dict():
+    # ---------------------------------------------------------
+    # 4. 共同作者連結 (可自行增減)
+    # ---------------------------------------------------------
     return {
-        'Chih-Wei Tseng': 'https://scholar.google.com/citations?user=ybjfgNEAAAAJ&hl=zh-TW',
-        'Bing-Fei Wu': 'https://scholar.google.com/citations?user=7-23WmIAAAAJ&hl=en',
-        'Yu-Chen Lin': 'https://scholar.google.com/citations?user=tI26CY8AAAAJ&hl=en',
+        # 'Co-Author Name': 'https://website...',
         }
 
-
-def generate_person_html(persons, connection=", ", make_bold=True, make_bold_name='Kashyap Chitta', 
-                         add_links=True, equal_contribution=None):
+def generate_person_html(persons, connection=", ", make_bold=True, make_bold_name=None, 
+                          add_links=True, equal_contribution=None):
     links = get_author_dict() if add_links else {}
     s = ""
+
+    if make_bold_name is None:
+        _, _, _, make_bold_name = get_personal_data()
 
     equal_contributors = -1
     if equal_contribution is not None:
@@ -54,10 +72,13 @@ def generate_person_html(persons, connection=", ", make_bold=True, make_bold_nam
             if string_part_i != "":
                 string_part_i += " "
             string_part_i += name_part_i
+        
         if string_part_i in links.keys():
             string_part_i = f'<a href="{links[string_part_i]}" target="_blank">{string_part_i}</a>'
-        if make_bold and string_part_i == make_bold_name:
+        
+        if make_bold and (string_part_i == make_bold_name or string_part_i == f'<a href="{links.get(make_bold_name, "")}" target="_blank">{make_bold_name}</a>'):
             string_part_i = f'<span style="font-weight: bold";>{make_bold_name}</span>'
+            
         if idx < equal_contributors:
             string_part_i += "*"
         if p != persons[-1]:
@@ -66,6 +87,8 @@ def generate_person_html(persons, connection=", ", make_bold=True, make_bold_nam
     return s
 
 def get_paper_entry(entry_key, entry):
+    _, _, _, my_name = get_personal_data()
+
     if 'highlight' in entry.fields.keys():
         s = """<div style="background-color: #ffffd0; margin-bottom: 3em;"> <div class="row"><div class="col-sm-3">"""
     else:
@@ -80,9 +103,9 @@ def get_paper_entry(entry_key, entry):
         s += f"""<a href="{entry.fields['html']}" target="_blank">{entry.fields['title']}</a> <br>"""
 
     if 'equal_contribution' in entry.fields.keys():
-        s += f"""{generate_person_html(entry.persons['author'], equal_contribution=int(entry.fields['equal_contribution']))} <br>"""
+        s += f"""{generate_person_html(entry.persons['author'], equal_contribution=int(entry.fields['equal_contribution']), make_bold_name=my_name)} <br>"""
     else: 
-        s += f"""{generate_person_html(entry.persons['author'])} <br>"""
+        s += f"""{generate_person_html(entry.persons['author'], make_bold_name=my_name)} <br>"""
     
     s += f"""<span style="font-style: italic;">{entry.fields['booktitle']}</span>, {entry.fields['year']} <br>"""
 
@@ -94,13 +117,12 @@ def get_paper_entry(entry_key, entry):
                 s += ' / '
             s += f"""<a href="{entry.fields[k]}" target="_blank">{v}</a>"""
             i += 1
-        else:
-            print(f'[{entry_key}] Warning: Field {k} missing!')
     
     cite = "<pre><code>@" + entry.type + "{" + f"{entry_key}, \n"
     cite += "\tauthor = {" + f"{generate_person_html(entry.persons['author'], make_bold=False, add_links=False, connection=' and ')}" + "}, \n"
     for entr in ['title', 'booktitle', 'year']:
-        cite += f"\t{entr} = " + "{" + f"{entry.fields[entr]}" + "}, \n"
+        if entr in entry.fields:
+            cite += f"\t{entr} = " + "{" + f"{entry.fields[entr]}" + "}, \n"
     cite += """}</pre></code>"""
     s += " /" + f"""<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{entry_key}" aria-expanded="false" aria-controls="collapseExample" style="margin-left: -6px; margin-top: -2px;">Bibtex</button><div class="collapse" id="collapse{entry_key}"><div class="card card-body">{cite}</div></div>"""
     s += """ </div> </div> </div>"""
@@ -121,46 +143,50 @@ def get_talk_entry(entry_key, entry):
                 s += ' / '
             s += f"""<a href="{entry.fields[k]}" target="_blank">{v}</a>"""
             i += 1
-        else:
-            print(f'[{entry_key}] Warning: Field {k} missing!')
     s += """ </div> </div> </div>"""
     return s
 
 def get_publications_html():
     parser = bibtex.Parser()
-    bib_data = parser.parse_file('publication_list.bib')
-    keys = bib_data.entries.keys()
-    s = ""
-    for k in keys:
-        s+= get_paper_entry(k, bib_data.entries[k])
-    return s
+    try:
+        bib_data = parser.parse_file('publication_list.bib')
+        keys = bib_data.entries.keys()
+        s = ""
+        for k in keys:
+            s+= get_paper_entry(k, bib_data.entries[k])
+        return s
+    except Exception as e:
+        print("Warning: publication_list.bib not found or error parsing.")
+        return "<p>No publications found yet.</p>"
 
 def get_talks_html():
     parser = bibtex.Parser()
-    bib_data = parser.parse_file('talk_list.bib')
-    keys = bib_data.entries.keys()
-    s = ""
-    for k in keys:
-        s+= get_talk_entry(k, bib_data.entries[k])
-    return s
+    try:
+        bib_data = parser.parse_file('talk_list.bib')
+        keys = bib_data.entries.keys()
+        s = ""
+        for k in keys:
+            s+= get_talk_entry(k, bib_data.entries[k])
+        return s
+    except Exception as e:
+        print("Warning: talk_list.bib not found or error parsing.")
+        return ""
 
 def get_index_html():
     pub = get_publications_html()
     talks = get_talks_html()
-    name, bio_text, footer = get_personal_data()
+    name, bio_text, footer, _ = get_personal_data()
     s = f"""
     <!doctype html>
 <html lang="en">
 
 <head>
-  <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <title>{name[0] + ' ' + name[1] + ' | AI Researcher'}</title>
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
@@ -199,8 +225,6 @@ def get_index_html():
         </div>
     </div>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
       integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
       crossorigin="anonymous"></script>
