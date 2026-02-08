@@ -22,8 +22,8 @@ def get_personal_data():
                 </p>
                 <p>
                     <span style="font-weight: bold;">Bio:</span>
-                    {first_name} received the B.S. degree in Electrical Engineering from <a href="https://www1.cycu.edu.tw/" target="_blank">Chung Yuan Christian University (CYCU)</a>, Taiwan. 
-                    She is currently pursuing her graduate degree at National Yang Ming Chiao Tung University (NYCU).
+                    {first_name} {last_name} received the B.S. degree in Electrical Engineering from <a href="https://www1.cycu.edu.tw/" target="_blank">Chung Yuan Christian University (CYCU)</a>, Taiwan. 
+                    She is currently pursuing her master degree at National Yang Ming Chiao Tung University (NYCU).
                 </p>
                 <p>
                     <a href="assets/pdf/cv.pdf" target="_blank" style="margin-right: 15px"><i class="fa fa-address-card fa-lg"></i> CV</a>
